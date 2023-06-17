@@ -26,7 +26,7 @@ public static class UserDataEndpoints
         .WithOpenApi();
 
         //Search user
-        group.MapGet("/search/{name}", async Task<Results<Ok<List<UserData>>, NotFound>> (string name, mosaCupBackendContext db) =>
+        group.MapGet("/Search/{name}", async Task<Results<Ok<List<UserData>>, NotFound>> (string name, mosaCupBackendContext db) =>
         {
             if (!name.StartsWith("@"))
             {

@@ -25,7 +25,7 @@ public static class FollowEndpoints
         .WithOpenApi();
 
         //Get followed users
-        group.MapGet("/followed/{id}", async Task<Results<Ok<List<Follow>>, NotFound>> (string uid, mosaCupBackendContext db) =>
+        group.MapGet("/Followed/{id}", async Task<Results<Ok<List<Follow>>, NotFound>> (string uid, mosaCupBackendContext db) =>
         {
             var followedUser = await db.Follow
                 .Where(model => model.FollowedUid == uid)
