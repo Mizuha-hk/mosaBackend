@@ -11,6 +11,9 @@
     "mssql2": {
       "type": "mssql",
       "connectionId": "ConnectionStrings:MosaHackathonDb"
+    },
+    "apis1": {
+      "type": "apis"
     }
   }
 }
