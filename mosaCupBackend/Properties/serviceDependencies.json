@@ -1,19 +1,16 @@
 {
   "dependencies": {
-    "mssql1": {
-      "type": "mssql",
-      "connectionId": "ConnectionStrings:mosaCupBackendContext"
-    },
     "secrets1": {
       "type": "secrets",
       "connectionId": "VaultUri"
     },
+    "mssql1": {
+      "type": "mssql",
+      "connectionId": "ConnectionStrings:mosaCupBackendContext"
+    },
     "mssql2": {
       "type": "mssql",
       "connectionId": "ConnectionStrings:MosaHackathonDb"
-    },
-    "apis1": {
-      "type": "apis"
     }
   }
 }
