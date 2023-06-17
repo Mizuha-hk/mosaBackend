@@ -11,10 +11,10 @@ public static class LikeEndpoints
 {
     public static void MapLikeEndpoints (this IEndpointRouteBuilder routes)
     {
-        var group = routes.MapGroup("/api/Like").WithTags(nameof(Like));
+        var group = routes.MapGroup("/api/Like").WithTags(nameof(like));
 
         //Get Like User
-        group.MapGet("/{pid}", async Task<Results<Ok<List<Like>>, NotFound>> (Guid Pid, mosaCupBackendContext db) =>
+        group.MapGet("/{pid}", async Task<Results<Ok<List<like>>, NotFound>> (Guid Pid, mosaCupBackendContext db) =>
         {
             var likeList = await db.Like
                 .Where(model => model.PostId == Pid)
@@ -28,20 +28,20 @@ public static class LikeEndpoints
         //Like
         group.MapPost("/", async (LikeReq reqData, mosaCupBackendContext db) =>
         {
-            var like = new Like { Id = Guid.NewGuid(), PostId = reqData.PostId, Uid = reqData.Uid };
+            var like = new like { Id = Guid.NewGuid(), PostId = reqData.PostId, Uid = reqData.Uid };
             db.Like.Add(like);
 
-            var post = await db.Post
+            var Post = await db.Post
                 .FirstOrDefaultAsync(m => m.Id == like.PostId);
 
-            var notification = new Notification
+            var notification = new notification
             {
                 Id = Guid.NewGuid(),
-                Uid = post.Uid,
+                Uid = Post.Uid,
                 AffectUid = like.Uid,
                 TypeCode = 1,
                 Date = DateTime.UtcNow,
-                Pid = post.Id
+                Pid = Post.Id
             };
             db.Notification.Add(notification);
 

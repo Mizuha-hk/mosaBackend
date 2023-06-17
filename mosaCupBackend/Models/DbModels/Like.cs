@@ -2,7 +2,7 @@
 
 namespace mosaCupBackend.Models.DbModels
 {
-    public class Like
+    public class like
     {
         [Key]
         public Guid Id { get; set; }

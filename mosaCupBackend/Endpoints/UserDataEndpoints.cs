@@ -11,14 +11,14 @@ public static class UserDataEndpoints
 {
     public static void MapUserDataEndpoints (this IEndpointRouteBuilder routes)
     {
-        var group = routes.MapGroup("/api/UserData").WithTags(nameof(UserData));
+        var group = routes.MapGroup("/api/UserData").WithTags(nameof(userData));
 
         //Load user info
-        group.MapGet("/{id}", async Task<Results<Ok<UserData>, NotFound>> (string uid, mosaCupBackendContext db) =>
+        group.MapGet("/{id}", async Task<Results<Ok<userData>, NotFound>> (string uid, mosaCupBackendContext db) =>
         {
             return await db.UserData.AsNoTracking()
                 .FirstOrDefaultAsync(model => model.DeletedAt == null && model.Uid == uid)
-                is UserData model
+                is userData model
                     ? TypedResults.Ok(model)
                     : TypedResults.NotFound();
         })
@@ -26,7 +26,7 @@ public static class UserDataEndpoints
         .WithOpenApi();
 
         //Search user
-        group.MapGet("/Search/{name}", async Task<Results<Ok<List<UserData>>, NotFound>> (string name, mosaCupBackendContext db) =>
+        group.MapGet("/Search/{name}", async Task<Results<Ok<List<userData>>, NotFound>> (string name, mosaCupBackendContext db) =>
         {
             if (!name.StartsWith("@"))
             {
@@ -52,7 +52,7 @@ public static class UserDataEndpoints
         {
             return await db.UserData
                 .FirstOrDefaultAsync(model => model.Name == userName)
-                is UserData model
+                is userData model
                     ? TypedResults.Ok(0)
                     : TypedResults.Ok(1);
         });
@@ -72,18 +72,17 @@ public static class UserDataEndpoints
         .WithOpenApi();
 
         //Create user
-        group.MapPost("/", async (UserDataReq reqData, mosaCupBackendContext db) =>
+        group.MapPost("/", async Task<Results<Ok, NotFound>> (UserDataReq reqData, mosaCupBackendContext db) =>
         {
-            var userData = new UserData
+            var userdata = new userData
             {
                 Uid = reqData.Uid,
                 DisplayName = reqData.DisplayName,
                 Name = reqData.Name,
                 Description = reqData.Description,
-                DeletedAt = null
             };
 
-            db.UserData.Add(userData);
+            db.UserData.Add(userdata);
             await db.SaveChangesAsync();
             return TypedResults.Ok();
         })

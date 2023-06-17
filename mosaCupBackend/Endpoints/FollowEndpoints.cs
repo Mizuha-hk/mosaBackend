@@ -11,10 +11,10 @@ public static class FollowEndpoints
 {
     public static void MapFollowEndpoints (this IEndpointRouteBuilder routes)
     {
-        var group = routes.MapGroup("/api/Follow").WithTags(nameof(Follow));
+        var group = routes.MapGroup("/api/Follow").WithTags(nameof(follow));
 
         //Get following users
-        group.MapGet("/{id}", async Task<Results<Ok<List<Follow>>, NotFound>> (string uid, mosaCupBackendContext db) =>
+        group.MapGet("/{id}", async Task<Results<Ok<List<follow>>, NotFound>> (string uid, mosaCupBackendContext db) =>
         {
             var followUser = await db.Follow
                 .Where(model => model.Uid == uid)
@@ -25,7 +25,7 @@ public static class FollowEndpoints
         .WithOpenApi();
 
         //Get followed users
-        group.MapGet("/Followed/{id}", async Task<Results<Ok<List<Follow>>, NotFound>> (string uid, mosaCupBackendContext db) =>
+        group.MapGet("/Followed/{id}", async Task<Results<Ok<List<follow>>, NotFound>> (string uid, mosaCupBackendContext db) =>
         {
             var followedUser = await db.Follow
                 .Where(model => model.FollowedUid == uid)
@@ -42,7 +42,7 @@ public static class FollowEndpoints
             return await db.Follow
                 .Where(m => m.Uid == reqData.Uid)
                 .FirstOrDefaultAsync(m => m.FollowedUid == reqData.FollowedUid)
-                    is Follow m
+                    is follow m
                     ? TypedResults.Ok(1)
                     : TypedResults.Ok(0);
         })
@@ -53,9 +53,9 @@ public static class FollowEndpoints
         group.MapPost("/", async (FollowReq reqData, mosaCupBackendContext db) =>
         {
             var id = Guid.NewGuid();
-            var follow = new Follow { Id = id, Uid = reqData.Uid, FollowedUid = reqData.FollowedUid };
+            var follow = new follow { Id = id, Uid = reqData.Uid, FollowedUid = reqData.FollowedUid };
             db.Follow.Add(follow);
-            var notification = new Notification
+            var notification = new notification
             {
                 Id = Guid.NewGuid(),
                 Uid = reqData.FollowedUid,

@@ -2,7 +2,7 @@
 
 namespace mosaCupBackend.Models.DbModels
 {
-    public class Follow
+    public class follow
     {
         [Key]
         public Guid Id { get; set; }

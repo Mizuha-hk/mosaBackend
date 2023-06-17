@@ -4,6 +4,8 @@
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <EnableSdkContainerSupport>true</EnableSdkContainerSupport>
+    <UserSecretsId>a14e2d86-45e3-492f-a5f2-573f28513ccd</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

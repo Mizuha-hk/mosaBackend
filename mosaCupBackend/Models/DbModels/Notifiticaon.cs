@@ -2,7 +2,7 @@
 
 namespace mosaCupBackend.Models.DbModels
 {
-    public class Notification
+    public class notification
     {
         [Key]
         public Guid Id { get; set; }

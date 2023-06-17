@@ -9,16 +9,16 @@ public static class NotificationEndpoints
 {
     public static void MapNotificationEndpoints (this IEndpointRouteBuilder routes)
     {
-        var group = routes.MapGroup("/api/Notification").WithTags(nameof(Notification));
+        var group = routes.MapGroup("/api/Notification").WithTags(nameof(notification));
 
         //Get user notification
-        group.MapPost("/{page}", async Task<Results<Ok<List<Notification>>, NotFound>> (int page, string uid, mosaCupBackendContext db) =>
+        group.MapPost("/{page}", async Task<Results<Ok<List<notification>>, NotFound>> (int page, string uid, mosaCupBackendContext db) =>
         {
             return await db.Notification.AsNoTracking()
                 .OrderByDescending(m => m.Date)
                 .Where(model => model.Uid == uid)
                 .ToListAsync()
-                is List<Notification> model
+                is List<notification> model
                     ? TypedResults.Ok(model)
                     : TypedResults.NotFound();
         })

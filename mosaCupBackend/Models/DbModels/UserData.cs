@@ -2,7 +2,7 @@
 
 namespace mosaCupBackend.Models.DbModels
 {
-    public class UserData
+    public class userData
     {
         [Key]
         public string Uid { get; set; }

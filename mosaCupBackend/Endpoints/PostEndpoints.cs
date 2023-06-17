@@ -11,7 +11,7 @@ public static class PostEndpoints
 {
     public static void MapPostEndpoints (this IEndpointRouteBuilder routes)
     {
-        var group = routes.MapGroup("/api/Post").WithTags(nameof(Post));
+        var group = routes.MapGroup("/api/Post").WithTags(nameof(post));
 
         //get all
         group.MapGet("/", async (mosaCupBackendContext db) =>
@@ -42,7 +42,7 @@ public static class PostEndpoints
             model.Sentence = reqData.Content;
             var result = JoyLevelMLModel.JoyLevelMLModel.Predict(model);
 
-            var post = new Post
+            var Post = new post
             {
                 Id = Guid.NewGuid(),
                 Uid = reqData.Uid,
@@ -51,9 +51,9 @@ public static class PostEndpoints
                 ReplyId = reqData.ReplyId,
                 JoyLevel = Convert.ToInt32(result.Avg__Readers_Joy)
             };
-            db.Post.Add(post);
+            db.Post.Add(Post);
             await db.SaveChangesAsync();
-            return Results.Ok(post.JoyLevel);
+            return Results.Ok(Post.JoyLevel);
         })
         .WithName("CreatePost")
         .WithOpenApi();

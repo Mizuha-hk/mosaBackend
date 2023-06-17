@@ -5,10 +5,8 @@ using mosaCupBackend.Endpoints;
 using Azure.Identity;
 var builder = WebApplication.CreateBuilder(args);
 
-var keyVaultEndpoint = new Uri(Environment.GetEnvironmentVariable("VaultUri"));
-builder.Configuration.AddAzureKeyVault(keyVaultEndpoint, new DefaultAzureCredential());
 builder.Services.AddDbContext<mosaCupBackendContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("mosaCupBackendContext") ?? throw new InvalidOperationException("Connection string 'mosaCupBackendContext' not found.")));
+    options.UseSqlServer(builder.Configuration["ConnectionStrings:MosaHackathonDb"]));
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
