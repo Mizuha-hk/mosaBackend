@@ -24,6 +24,18 @@ public static class FollowEndpoints
         .WithName("GetFollowingUsers")
         .WithOpenApi();
 
+        //Get followed users
+        group.MapGet("/followed/{id}", async Task<Results<Ok<List<Follow>>, NotFound>> (string uid, mosaCupBackendContext db) =>
+        {
+            var followedUser = await db.Follow
+                .Where(model => model.FollowedUid == uid)
+                .ToListAsync();
+            return followedUser != null ? TypedResults.Ok(followedUser) : TypedResults.NotFound();
+        })
+        .WithName("GetFollowedUsers")
+        .WithOpenApi();
+
+
         //Judge Follow or UnFollow(following -> 1/ unfollowing -> 0)
         group.MapPost("/JudgeFollow", async Task<Results<Ok<int>, NotFound>> (FollowReq reqData, mosaCupBackendContext db) =>
         {
