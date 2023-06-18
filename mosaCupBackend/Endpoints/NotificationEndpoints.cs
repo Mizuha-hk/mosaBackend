@@ -17,6 +17,8 @@ public static class NotificationEndpoints
             return await db.Notification.AsNoTracking()
                 .OrderByDescending(m => m.Date)
                 .Where(model => model.Uid == uid)
+                .Skip(page*10)
+                .Take(10)
                 .ToListAsync()
                 is List<notification> model
                     ? TypedResults.Ok(model)
