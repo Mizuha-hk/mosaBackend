@@ -14,7 +14,7 @@ public static class PostEndpoints
         var group = routes.MapGroup("/api/Post").WithTags(nameof(post));
 
         //get all
-        group.MapGet("/", async (mosaCupBackendContext db) =>
+        group.MapGet("/", async (mosaCupDbContext db) =>
         {
             return await db.Post
                 .OrderByDescending(m => m.PostedDate)
@@ -24,7 +24,7 @@ public static class PostEndpoints
         .WithOpenApi();
 
         //get 10 posts
-        group.MapGet("/{page}", async (int page, mosaCupBackendContext db) =>
+        group.MapGet("/{page}", async (int page, mosaCupDbContext db) =>
         {
             return await db.Post
                 .OrderByDescending(m => m.PostedDate)
@@ -36,7 +36,7 @@ public static class PostEndpoints
         .WithOpenApi();
 
         //add Post / return JoyLevel
-        group.MapPost("/", async (PostReq reqData, mosaCupBackendContext db) =>
+        group.MapPost("/", async (PostReq reqData, mosaCupDbContext db) =>
         {
             var model = new JoyLevelMLModel.JoyLevelMLModel.ModelInput();
             model.Sentence = reqData.Content;
@@ -59,7 +59,7 @@ public static class PostEndpoints
         .WithOpenApi();
 
         //Delete Post
-        group.MapDelete("/{id}", async Task<Results<Ok, NotFound>> (Guid id, mosaCupBackendContext db) =>
+        group.MapDelete("/{id}", async Task<Results<Ok, NotFound>> (Guid id, mosaCupDbContext db) =>
         {
             var affected = await db.Post
                 .Where(model => model.Id == id)

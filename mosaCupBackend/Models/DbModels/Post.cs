@@ -13,7 +13,7 @@ namespace mosaCupBackend.Models.DbModels
         [Required]
         public DateTime PostedDate { get; set; }
 
-        public int? ReplyId { get; set; } = null;
+        public Guid? ReplyId { get; set; } = null;
         [Required]
         public int JoyLevel { get; set; }
     }

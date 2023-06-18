@@ -5,7 +5,7 @@ using mosaCupBackend.Endpoints;
 using Azure.Identity;
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<mosaCupBackendContext>(options =>
+builder.Services.AddDbContext<mosaCupDbContext>(options =>
     options.UseSqlServer(builder.Configuration["ConnectionStrings:MosaHackathonDb"]));
 
 // Add services to the container.

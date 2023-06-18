@@ -14,7 +14,7 @@ public static class FollowEndpoints
         var group = routes.MapGroup("/api/Follow").WithTags(nameof(follow));
 
         //Get following users
-        group.MapGet("/{id}", async Task<Results<Ok<List<follow>>, NotFound>> (string uid, mosaCupBackendContext db) =>
+        group.MapGet("/{id}", async Task<Results<Ok<List<follow>>, NotFound>> (string uid, mosaCupDbContext db) =>
         {
             var followUser = await db.Follow
                 .Where(model => model.Uid == uid)
@@ -25,7 +25,7 @@ public static class FollowEndpoints
         .WithOpenApi();
 
         //Get followed users
-        group.MapGet("/Followed/{id}", async Task<Results<Ok<List<follow>>, NotFound>> (string uid, mosaCupBackendContext db) =>
+        group.MapGet("/Followed/{id}", async Task<Results<Ok<List<follow>>, NotFound>> (string uid, mosaCupDbContext db) =>
         {
             var followedUser = await db.Follow
                 .Where(model => model.FollowedUid == uid)
@@ -37,7 +37,7 @@ public static class FollowEndpoints
 
 
         //Judge Follow or UnFollow(following -> 1/ unfollowing -> 0)
-        group.MapPost("/JudgeFollow", async Task<Results<Ok<int>, NotFound>> (FollowReq reqData, mosaCupBackendContext db) =>
+        group.MapPost("/JudgeFollow", async Task<Results<Ok<int>, NotFound>> (FollowReq reqData, mosaCupDbContext db) =>
         {
             return await db.Follow
                 .Where(m => m.Uid == reqData.Uid)
@@ -50,7 +50,7 @@ public static class FollowEndpoints
         .WithOpenApi();
 
         //Follow user
-        group.MapPost("/", async (FollowReq reqData, mosaCupBackendContext db) =>
+        group.MapPost("/", async (FollowReq reqData, mosaCupDbContext db) =>
         {
             var id = Guid.NewGuid();
             var follow = new follow { Id = id, Uid = reqData.Uid, FollowedUid = reqData.FollowedUid };
@@ -73,7 +73,7 @@ public static class FollowEndpoints
         .WithOpenApi();
 
         //UnFollow user
-        group.MapPost("/Unfollow", async Task<Results<Ok, NotFound>> (FollowReq reqData, mosaCupBackendContext db) =>
+        group.MapPost("/Unfollow", async Task<Results<Ok, NotFound>> (FollowReq reqData, mosaCupDbContext db) =>
         {
             var follow = await db.Follow
                 .Where(model => model.Uid == reqData.Uid)

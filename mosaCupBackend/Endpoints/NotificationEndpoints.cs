@@ -12,7 +12,7 @@ public static class NotificationEndpoints
         var group = routes.MapGroup("/api/Notification").WithTags(nameof(notification));
 
         //Get user notification
-        group.MapPost("/{page}", async Task<Results<Ok<List<notification>>, NotFound>> (int page, string uid, mosaCupBackendContext db) =>
+        group.MapPost("/{page}", async Task<Results<Ok<List<notification>>, NotFound>> (int page, string uid, mosaCupDbContext db) =>
         {
             return await db.Notification.AsNoTracking()
                 .OrderByDescending(m => m.Date)

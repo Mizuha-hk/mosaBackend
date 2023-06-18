@@ -14,7 +14,7 @@ public static class UserDataEndpoints
         var group = routes.MapGroup("/api/UserData").WithTags(nameof(userData));
 
         //Load user info
-        group.MapGet("/{id}", async Task<Results<Ok<userData>, NotFound>> (string uid, mosaCupBackendContext db) =>
+        group.MapGet("/{id}", async Task<Results<Ok<userData>, NotFound>> (string uid, mosaCupDbContext db) =>
         {
             return await db.UserData.AsNoTracking()
                 .FirstOrDefaultAsync(model => model.DeletedAt == null && model.Uid == uid)
@@ -26,7 +26,7 @@ public static class UserDataEndpoints
         .WithOpenApi();
 
         //Search user
-        group.MapGet("/Search/{name}", async Task<Results<Ok<List<userData>>, NotFound>> (string name, mosaCupBackendContext db) =>
+        group.MapGet("/Search/{name}", async Task<Results<Ok<List<userData>>, NotFound>> (string name, mosaCupDbContext db) =>
         {
             if (!name.StartsWith("@"))
             {
@@ -48,7 +48,7 @@ public static class UserDataEndpoints
         .WithOpenApi();
 
         //Judge Name is Available (Available -> 1/ Not available -> 0)
-        group.MapGet("/JudgeAvailable/{name}", async Task<Results<Ok<int>, NotFound>> (string userName, mosaCupBackendContext db) =>
+        group.MapGet("/JudgeAvailable/{name}", async Task<Results<Ok<int>, NotFound>> (string userName, mosaCupDbContext db) =>
         {
             return await db.UserData
                 .FirstOrDefaultAsync(model => model.Name == userName)
@@ -58,7 +58,7 @@ public static class UserDataEndpoints
         });
 
         //Edit profile
-        group.MapPut("/EditProfile", async Task<Results<Ok, NotFound>> (EditProfile userData, mosaCupBackendContext db) =>
+        group.MapPut("/EditProfile", async Task<Results<Ok, NotFound>> (EditProfile userData, mosaCupDbContext db) =>
         {
             var affected = await db.UserData
                 .Where(model => model.Uid == userData.Uid)
@@ -72,7 +72,7 @@ public static class UserDataEndpoints
         .WithOpenApi();
 
         //Create user
-        group.MapPost("/", async Task<Results<Ok, NotFound>> (UserDataReq reqData, mosaCupBackendContext db) =>
+        group.MapPost("/", async Task<Results<Ok, NotFound>> (UserDataReq reqData, mosaCupDbContext db) =>
         {
             var userdata = new userData
             {
@@ -90,7 +90,7 @@ public static class UserDataEndpoints
         .WithOpenApi();
 
         //Delete user
-        group.MapDelete("/{id}", async Task<Results<Ok, NotFound>> (string uid, mosaCupBackendContext db) =>
+        group.MapDelete("/{id}", async Task<Results<Ok, NotFound>> (string uid, mosaCupDbContext db) =>
         {
             var affected = await db.UserData
                 .Where(model => model.Uid == uid)
@@ -103,7 +103,7 @@ public static class UserDataEndpoints
         .WithOpenApi();
 
         //Restore user
-        group.MapGet("/Restore/{id}", async Task<Results<Ok, NotFound>> (string uid, mosaCupBackendContext db) =>
+        group.MapGet("/Restore/{id}", async Task<Results<Ok, NotFound>> (string uid, mosaCupDbContext db) =>
         {
             var affected = await db.UserData
                 .Where(model => model.Uid == uid)

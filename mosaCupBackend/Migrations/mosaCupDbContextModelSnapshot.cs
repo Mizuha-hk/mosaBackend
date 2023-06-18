@@ -10,8 +10,8 @@ using mosaCupBackend.Data;
 
 namespace mosaCupBackend.Migrations
 {
-    [DbContext(typeof(mosaCupBackendContext))]
-    partial class mosaCupBackendContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(mosaCupDbContext))]
+    partial class mosaCupDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -103,8 +103,8 @@ namespace mosaCupBackend.Migrations
                     b.Property<DateTime>("PostedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("ReplyId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("ReplyId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Uid")
                         .IsRequired()

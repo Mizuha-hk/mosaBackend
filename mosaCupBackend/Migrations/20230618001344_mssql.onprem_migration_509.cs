@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace mosaCupBackend.Migrations
 {
     /// <inheritdoc />
-    public partial class mssqlonprem_migration_287 : Migration
+    public partial class mssqlonprem_migration_509 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -61,7 +61,7 @@ namespace mosaCupBackend.Migrations
                     Uid = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PostedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ReplyId = table.Column<int>(type: "int", nullable: true),
+                    ReplyId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     JoyLevel = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>

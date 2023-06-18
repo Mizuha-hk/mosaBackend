@@ -11,9 +11,9 @@ using mosaCupBackend.Data;
 
 namespace mosaCupBackend.Migrations
 {
-    [DbContext(typeof(mosaCupBackendContext))]
-    [Migration("20230617224027_mssql.onprem_migration_287")]
-    partial class mssqlonprem_migration_287
+    [DbContext(typeof(mosaCupDbContext))]
+    [Migration("20230618001344_mssql.onprem_migration_509")]
+    partial class mssqlonprem_migration_509
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -106,8 +106,8 @@ namespace mosaCupBackend.Migrations
                     b.Property<DateTime>("PostedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("ReplyId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("ReplyId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Uid")
                         .IsRequired()
